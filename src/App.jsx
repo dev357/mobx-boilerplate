@@ -8,7 +8,7 @@ export default class App extends Component {
     return (
       <div>
         <h1>
-          React & MobX Boilerplate
+          React & MobX Boilerplate!!
         </h1>
 
         <button onClick={this.onReset}>
