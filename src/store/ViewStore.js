@@ -19,6 +19,7 @@ export default class ViewStore {
     switch(this.currentView.name) {
       case "about": return "/about/";
       case "notfound": return "/notfound/";
+      case "timer": return "/timer/";
     }
   }
 

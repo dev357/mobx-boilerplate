@@ -4,11 +4,18 @@ import {AppContainer} from 'react-hot-loader';
 import AppState from './AppState';
 import App from './App';
 
+import ViewStore from './store/ViewStore';
+import { startRouter } from './store/router';
+import { simpleFetch } from './store/fetch';
+
 const appState = new AppState();
+
+const viewStore = new ViewStore(simpleFetch);
+startRouter(viewStore);
 
 render(
   <AppContainer>
-    <App appState={appState} />
+    <App view={viewStore} />
   </AppContainer>,
   document.getElementById('app')
 );
@@ -19,7 +26,7 @@ if (module.hot) {
 
     render(
       <AppContainer>
-        <NextApp appState={appState}/>
+        <NextApp view={viewStore}/>
       </AppContainer>,
       document.getElementById('app')
     );
