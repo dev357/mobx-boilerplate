@@ -4,13 +4,26 @@ import {autorun} from 'mobx';
 
 export function startRouter(store) {
 
+  /*
   // update state on url change
-  const router = new Router({
+  const router =new Router({
     "about": () => store.showAbout()
   }).configure({
     notfound: () => store.showNotFound(),
     html5history: true
-  }).init()
+  }).init();
+  */
+
+  const router = Router({
+    '/': () => console.log('index'),
+    '/risto': () => console.log('risto'),
+    '/piret/': () => console.log('piret')
+  });
+  router.configure({
+    notfound: () => store.showNotFound(),
+    html5history: true
+  });
+  router.init();
 
   // update url on state changes
   autorun(() => {

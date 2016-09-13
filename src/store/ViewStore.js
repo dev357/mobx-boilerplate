@@ -1,4 +1,4 @@
-import { observable, computer, action } from 'mobx';
+import { observable, computed, action } from 'mobx';
 import { fromPromise } from 'mobx-utils';
 
 export default class ViewStore {
