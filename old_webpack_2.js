@@ -21,6 +21,10 @@ const common = {
   },
   resolve: {
     extensions: ['', '.js', '.jsx'],
+    "alias": {
+      "react": "preact-compat",
+      "react-dom": "preact-compat"
+    }
   },
   module: {
     loaders: [
@@ -127,8 +131,11 @@ if (TARGET === 'build') {
         // Extract CSS during the build process
         {
           test: /\.css$/,
-          loader: ExtractTextPlugin.extract('style', 'css'),
-          include: PATHS.src,
+          loader: ExtractTextPlugin.extract(
+            'style',
+            'css?modules&localIdentName=[name]__[local]___[hash:base64:5]'
+          ),
+          include: PATHS.src
         },
         {
           test: /\.jsx?$/,

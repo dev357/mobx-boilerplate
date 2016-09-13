@@ -1,5 +1,4 @@
 import { observable, computed, action } from 'mobx';
-import { fromPromise } from 'mobx-utils';
 
 class ViewStore {
   fetch = null;

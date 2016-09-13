@@ -1,14 +1,10 @@
 {
   "presets": [
-    "react",
     "es2015",
-    "stage-1",
-    "react-hmre"
+    "stage-1"
   ],
   "plugins": [
     "transform-decorators-legacy",
-    "react-hot-loader/babel",
-    "transform-object-assign",
-    "array-includes"
+    ["transform-react-jsx", { "pragma": "h" }]
   ]
 }
