@@ -1,0 +1,3 @@
+.app {
+  composes: darkBG lightText from "./main.css"
+}

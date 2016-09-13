@@ -1,7 +1,7 @@
 import { observable, computed, action } from 'mobx';
 import { fromPromise } from 'mobx-utils';
 
-export default class ViewStore {
+class ViewStore {
   fetch = null;
 
   @observable currentUser = null;
@@ -17,15 +17,21 @@ export default class ViewStore {
 
   @computed get currentPath() {
     switch(this.currentView.name) {
-      case "about": return "/about/";
+      case "risto": return "/risto/";
+      case "piret": return "/piret/";
       case "notfound": return "/notfound/";
-      case "timer": return "/timer/";
+    }
+  }
+
+  @action showIndex() {
+    this.currentView = {
+      name: "index"
     }
   }
 
   @action showAbout() {
     this.currentView = {
-      name: "overview"
+      name: "about"
     }
   }
 
@@ -35,3 +41,5 @@ export default class ViewStore {
     }
   }
 }
+
+export default ViewStore;

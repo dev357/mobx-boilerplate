@@ -1,3 +1,5 @@
+import "react-hot-loader/patch";
+
 import React from 'react';
 import {render} from 'react-dom';
 import {AppContainer} from 'react-hot-loader';
@@ -8,14 +10,16 @@ import ViewStore from './store/ViewStore';
 import { startRouter } from './store/router';
 import { simpleFetch } from './store/fetch';
 
-const appState = new AppState();
-
 const viewStore = new ViewStore(simpleFetch);
 startRouter(viewStore);
 
+const root = document.createElement('div');
+root.id = 'app';
+document.body.appendChild(root);
+
 render(
   <AppContainer>
-    <App view={viewStore} />
+    <App store={viewStore} />
   </AppContainer>,
   document.getElementById('app')
 );
@@ -26,7 +30,7 @@ if (module.hot) {
 
     render(
       <AppContainer>
-        <NextApp view={viewStore}/>
+        <NextApp store={viewStore}/>
       </AppContainer>,
       document.getElementById('app')
     );
