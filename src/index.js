@@ -1,3 +1,5 @@
+import './main.css';
+
 import {h, render} from 'preact';
 
 import ViewStore from './store/ViewStore';
@@ -10,7 +12,7 @@ startRouter(viewStore);
 
 let root;
 function renderApp() {
-  const App = require('./App').default;
+  const App = require('./views/App/App').default;
   root = render(
     <div>
       <App store={viewStore}/>
@@ -23,7 +25,7 @@ function renderApp() {
 
 if (module.hot) {
   const flushLogs = flushHMRLogs();
-  module.hot.accept('./App', () => requestAnimationFrame(() => {
+  module.hot.accept('./views/App/App', () => requestAnimationFrame(() => {
     flushLogs();
     renderApp();
   }));

@@ -1,0 +1,24 @@
+/* LAYOUT CSS */
+.content {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.content > header {
+  flex: 0 0 var(--appbar-height);
+}
+
+.content > section {
+  flex: 1 1 auto;
+  padding: 1rem;
+}
+
+.content > footer {
+  flex: 0 0 var(--footer-height);
+}
+
+.sidebar {
+  box-shadow: none !important;
+  overflow-x: hidden;
+}

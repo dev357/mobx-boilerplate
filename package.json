@@ -7,6 +7,7 @@
     "start_old": "node webpack.server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "cross-env NODE_ENV=development webpack-dev-server --inline --hot --progress",
+    "new": "cross-env NODE_ENV=development babel-node webpack.server.babel.js",
     "build": "cross-env NODE_ENV=production webpack -p --progress"
   },
   "author": "",
@@ -51,6 +52,7 @@
     "mobx-react-devtools": "^4.2.5",
     "mobx-utils": "^1.0.0",
     "preact": "^6.0.2",
-    "preact-compat": "^3.0.1"
+    "preact-compat": "^3.0.1",
+    "react-sidebar": "^2.2.1"
   }
 }

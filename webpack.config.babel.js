@@ -27,7 +27,7 @@ module.exports = {
     ],
     alias: {
       components: path.resolve(__dirname, "src/components"),		// used for tests
-      style: path.resolve(__dirname, "src/style"),
+      styles: path.resolve(__dirname, "src/styles"),
       'react': 'preact-compat',
       'react-dom': 'preact-compat'
     }
@@ -115,13 +115,7 @@ module.exports = {
     publicPath: '/',
     contentBase: './src',
     historyApiFallback: true,
-    proxy: [
-      // OPTIONAL: proxy configuration:
-      // {
-      // 	path: '/optional-prefix/**',
-      // 	target: 'http://target-host.com',
-      // 	rewrite: req => { req.url = req.url.replace(/^\/[^\/]+\//, ''); }   // strip first path segment
-      // }
-    ]
+    noInfo: false,
+    stats: 'errors-only'
   }
 };

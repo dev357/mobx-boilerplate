@@ -1,6 +1,6 @@
 const webpack = require('webpack');
 const WebpackDevServer = require('webpack-dev-server');
-const config = require('./webpack.config.js');
+const config = require('./webpack.config.babel.js');
 
 const compiler = webpack(config);
 
@@ -15,7 +15,8 @@ compiler.plugin('done', function () {
 });
 
 new WebpackDevServer(compiler, {
-  publicPath: config.output.publicPath,
+  publicPath: '/',
+  contentBase: '/src',
   hot: true,
   historyApiFallback: true,
   noInfo: true,
@@ -27,6 +28,5 @@ new WebpackDevServer(compiler, {
   if (err) {
     console.log(err);
   }
-
   console.log('Listening at localhost:3000');
 });

@@ -1,7 +1,1 @@
-.darkBG {
-  background-color: dimgray;
-}
-
-.lightText {
-  color: azure;
-}
+@import "./styles/main.css";

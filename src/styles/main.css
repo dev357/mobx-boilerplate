@@ -1,0 +1,10 @@
+@import "./colors.css";
+@import "./layout.css";
+
+html, body {
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  height: 100%;
+  background-color: #eee;
+  margin: 0;
+  padding: 0;
+}

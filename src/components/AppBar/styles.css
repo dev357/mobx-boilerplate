@@ -1,0 +1,26 @@
+.header {
+  composes: transitionLeft from "styles/effect.css";
+  background-color: var(--primary-color);
+  color: var(--white-color);
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding-left: 1rem;
+}
+
+.title {
+  composes: roman large from "styles/type.css"
+}
+
+.drawerToggle {
+  composes: noUserSelect from "styles/layout.css";
+  color: var(--white-color);
+  cursor:pointer;
+  font-size: 20px;
+  margin-right: 10px;
+}
+
+.drawerToggle:hover {
+  color: var(--white-color);
+  text-decoration: none;
+}
