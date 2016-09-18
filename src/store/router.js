@@ -1,22 +1,28 @@
 import {Router} from 'director';
 import {autorun} from 'mobx';
 
-export function startRouter(store) {
+export function startRouter(view, layout) {
 
   // update state on url change
   const router = new Router({
-    '/': () => store.showIndex(),
-    '/about': () => store.showAbout(),
+    '/': () => view.showHome(),
+    '/counter': () => view.showCounter(),
+    '/about': () => view.showAbout(),
   });
   router.configure({
-    notfound: () => store.showNotFound(),
+    notfound: () => view.showNotFound(),
     html5history: true
   });
   router.init();
 
   // update url on state changes
   autorun(() => {
-    const path = store.currentPath;
-    if (path !== window.location.pathname) window.history.pushState(null, null, path);
+    const path = view.currentPath;
+    if (path !== window.location.pathname) {
+      window.history.pushState(null, null, path);
+      if (!layout.sideBarDocked && layout.sideBarOpen) {
+        layout.toggleSideBarOpen();
+      }
+    }
   })
 }

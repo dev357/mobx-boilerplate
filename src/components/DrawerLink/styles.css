@@ -1,0 +1,21 @@
+.drawerLink {
+  padding-bottom: 1rem;
+}
+
+.drawerLink a {
+  color: var(--primary-color);
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.drawerLink a:visited {
+  color: var(--primary-color);
+}
+
+.drawerLink a:hover {
+  color: var(--accent-color);
+}
+
+.active {
+  color: var(--accent-color) !important;
+}

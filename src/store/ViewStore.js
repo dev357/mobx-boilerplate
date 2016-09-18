@@ -1,4 +1,5 @@
 import { observable, computed, action } from 'mobx';
+import {bind} from 'decko';
 
 class ViewStore {
   fetch = null;
@@ -15,26 +16,34 @@ class ViewStore {
   }
 
   @computed get currentPath() {
+    console.log('currentPath', this.currentView.name);
     switch(this.currentView.name) {
-      case "risto": return "/risto/";
-      case "piret": return "/piret/";
-      case "notfound": return "/notfound/";
+      case "home": return "/";
+      case "counter": return "/counter";
+      case "about": return "/about";
+      default: return "/notfound";
     }
   }
 
-  @action showIndex() {
+  @bind @action showHome() {
     this.currentView = {
-      name: "index"
+      name: "home"
     }
   }
 
-  @action showAbout() {
+  @bind @action showCounter() {
+    this.currentView = {
+      name: "counter"
+    }
+  }
+
+  @bind @action showAbout() {
     this.currentView = {
       name: "about"
     }
   }
 
-  @action showNotFound() {
+  @bind @action showNotFound() {
     this.currentView = {
       name: "notfound"
     }

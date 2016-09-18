@@ -2,6 +2,7 @@ import './main.css';
 
 import {h, render} from 'preact';
 import {useStrict} from 'mobx';
+import {Provider} from 'mobx-react';
 import ViewStore from './store/ViewStore';
 import layoutStore from './store/LayoutStore';
 import DevTools from 'mobx-react-devtools';
@@ -9,7 +10,7 @@ import {startRouter} from './store/router';
 import {simpleFetch} from './store/fetch';
 
 const viewStore = new ViewStore(simpleFetch);
-startRouter(viewStore);
+startRouter(viewStore, layoutStore);
 
 useStrict(true);
 
@@ -17,10 +18,9 @@ let root;
 function renderApp() {
   const App = require('./views/App/App').default;
   root = render(
-    <div>
-      <App view={viewStore} layout={layoutStore}/>
-      <DevTools/>
-    </div>,
+    <Provider view={viewStore} layout={layoutStore}>
+      <App />
+    </Provider>,
     document.body,
     root
   );
@@ -48,5 +48,5 @@ function flushHMRLogs() {
   return () => console.log(`%c🚀 ${logs.splice(0, logs.length).join(' ')}`, 'color:#888;');
 }
 
+render(<DevTools/>, document.body);
 renderApp();
-

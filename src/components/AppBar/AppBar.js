@@ -2,7 +2,7 @@ import {h} from 'preact';
 import styles from './styles.css';
 import {observer} from 'mobx-react';
 
-const AppBar = observer(({title, toggleSidebar}) => {
+function AppBar({title, toggleSidebar}) {
   return (
     <header className={styles.header}>
       <a
@@ -14,6 +14,6 @@ const AppBar = observer(({title, toggleSidebar}) => {
       {title}
     </header>
   )
-});
+}
 
-export default AppBar;
+export default observer(AppBar);

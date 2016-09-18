@@ -28,6 +28,7 @@ module.exports = {
     alias: {
       components: path.resolve(__dirname, "src/components"),		// used for tests
       styles: path.resolve(__dirname, "src/styles"),
+      views: path.resolve(__dirname, "src/views"),
       'react': 'preact-compat',
       'react-dom': 'preact-compat'
     }

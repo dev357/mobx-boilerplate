@@ -29,10 +29,6 @@
   padding-top: 25px;
 }
 
-.expandableList {
-  composes: transitionHeight from "styles/effect.css";
-}
-
 .drawer strong {
   display: block;
   padding: 15px 22px;
@@ -50,23 +46,3 @@
   border-top: 1px solid rgba(0,0,0,.2);
 }
 
-.drawer a {
-  color: var(--primary-color);
-  cursor: pointer;
-  text-decoration: none;
-}
-
-.drawer a:visited {
-  color: var(--primary-color);
-}
-
-.drawer a:hover {
-  color: var(--accent-color);
-}
-.drawer > ul > li li {
-  padding-bottom: 1rem;
-}
-
-.active {
-  color: var(--accent-color) !important;
-}

@@ -1,13 +1,14 @@
 import {h, Component} from 'preact';
-import {observer} from 'mobx-react';
+import styles from './styles.css';
+import {observer, inject} from 'mobx-react';
 import Sidebar from 'react-sidebar';
 import SideDrawer from 'components/SideDrawer/SideDrawer';
 import AppBar from 'components/AppBar/AppBar';
 import AppFooter from 'components/AppFooter/AppFooter';
 
-import styles from './styles.css';
+import {Counter, counterState} from '../Counter';
 
-const App = observer(({view, layout}) => {
+function App({view, layout}) {
   const title = "dev357.io";
   return (
     <div className={styles.app}>
@@ -34,14 +35,6 @@ const App = observer(({view, layout}) => {
             <div>
               breakpoints: {JSON.stringify(layout.breakpoint)}
             </div>
-            <div>
-              sidebar: {JSON.stringify(layout.sideBar)}
-            </div>
-            <button
-              onClick={layout.toggleOpen}
-            >
-              TOGGLE!
-            </button>
             { renderCurrentView(view) }
           </section>
           <AppFooter />
@@ -50,24 +43,23 @@ const App = observer(({view, layout}) => {
       </Sidebar>
     </div>
   );
-});
+}
 
 function renderCurrentView(store) {
   const view = store.currentView;
   switch (view.name) {
-    case "index":
-      return (
-        <div>
-          CONTENT
-        </div>
-      );
-    case "notfound":
-      return <div>NOT FOUND</div>;
+    case "home":
+      return <div>HOME</div>;
+    case "counter":
+      return <Counter store={counterState} />;
     case "about":
       return <div>ABOUT</div>;
+    case "notfound":
+      return <div>NOT FOUND</div>;
+
     default:
       return <div>unknown view in store.currentView</div>
   }
 }
 
-export default App;
+export default observer(["view", "layout"], App);

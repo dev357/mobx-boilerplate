@@ -1,6 +1,5 @@
 import {observable, computed, action} from 'mobx';
 import {bind} from 'decko';
-import {MatchMedia} from 'mobx-react-matchmedia';
 
 export class LayoutStore {
   @observable sideBarOpen = false;

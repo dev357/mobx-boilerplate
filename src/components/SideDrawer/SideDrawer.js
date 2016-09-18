@@ -1,32 +1,33 @@
 import {h} from 'preact';
 import styles from './styles.css';
+import {observer} from 'mobx-react';
 
 import ExpandableList from 'components/ExpandableList/ExpandableList';
+import DrawerLink from 'components/DrawerLink/DrawerLink';
 
-const SideDrawer = ({title}) => {
+function SideDrawer({title, view}) {
   return (
     <div className={styles.drawer}>
       <div className={styles.drawerBrand}>{title}</div>
       <hr className={styles.divider}/>
       <ul>
-        <li className={styles.expandableList}>
+        <li>
           <ExpandableList title="Examples">
-            <li><a>Home</a></li>
-            <li><a>Counter</a></li>
-            <li><a>About</a></li>
+            <DrawerLink name="Home" onClick={view.showHome}/>
+            <DrawerLink name="Counter" onClick={view.showCounter}/>
+            <DrawerLink name="About" onClick={view.showAbout}/>
           </ExpandableList>
         </li>
-        <li className={styles.expandableList}>
+        <li>
           <ExpandableList title="Menu 2">
-            <li><a>Item 1</a></li>
-            <li><a>Item 2</a></li>
-            <li><a>Item 3</a></li>
+            <DrawerLink name="Item 1" onClick={() => console.log('click!')}/>
+            <DrawerLink name="Item 2" onClick={() => console.log('click!')}/>
+            <DrawerLink name="Item 3" onClick={() => console.log('click!')}/>
           </ExpandableList>
         </li>
       </ul>
     </div>
   );
+}
 
-};
-
-export default SideDrawer;
+export default observer(["view"], SideDrawer);
