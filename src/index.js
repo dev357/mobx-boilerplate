@@ -1,8 +1,9 @@
 import './main.css';
 
 import {h, render} from 'preact';
-
+import {useStrict} from 'mobx';
 import ViewStore from './store/ViewStore';
+import layoutStore from './store/LayoutStore';
 import DevTools from 'mobx-react-devtools';
 import {startRouter} from './store/router';
 import {simpleFetch} from './store/fetch';
@@ -10,12 +11,14 @@ import {simpleFetch} from './store/fetch';
 const viewStore = new ViewStore(simpleFetch);
 startRouter(viewStore);
 
+useStrict(true);
+
 let root;
 function renderApp() {
   const App = require('./views/App/App').default;
   root = render(
     <div>
-      <App store={viewStore}/>
+      <App view={viewStore} layout={layoutStore}/>
       <DevTools/>
     </div>,
     document.body,

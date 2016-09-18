@@ -1,0 +1,13 @@
+/* Footer CSS */
+.footer {
+  background-color: var(--primary-color);
+  color: var(--white-color);
+  margin-left: 0;
+  padding-left: 1rem;
+  transition: margin-left 0.2s;
+}
+
+.footer a {
+  color: var(--white-color);
+  text-decoration: underline;
+}

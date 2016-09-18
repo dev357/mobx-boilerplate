@@ -1,0 +1,72 @@
+/* Side drawer CSS */
+.drawerBrand {
+  composes: roman large from "styles/type.css";
+  height: var(--appbar-height);
+  padding-left: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.drawer {
+  composes: noUserSelect from "styles/layout.css";
+  width: var(--sidedrawer-width);
+  background-color: var(--white-color);
+  height: 100vh;
+  z-index: 2;
+  overflow-x: hidden;
+  border-right: 1px solid rgba(0,0,0,.2);
+}
+
+.drawer ul {
+  list-style: none;
+}
+
+.drawer > ul {
+  padding-left: 0;
+}
+
+.drawer > ul > li:first-child {
+  padding-top: 25px;
+}
+
+.expandableList {
+  composes: transitionHeight from "styles/effect.css";
+}
+
+.drawer strong {
+  display: block;
+  padding: 15px 22px;
+  cursor: pointer;
+}
+
+.drawer strong:hover {
+  background-color: var(--primary-color);
+  color: var(--white-color);
+}
+
+.divider {
+  margin: 0;
+  border: 0;
+  border-top: 1px solid rgba(0,0,0,.2);
+}
+
+.drawer a {
+  color: var(--primary-color);
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.drawer a:visited {
+  color: var(--primary-color);
+}
+
+.drawer a:hover {
+  color: var(--accent-color);
+}
+.drawer > ul > li li {
+  padding-bottom: 1rem;
+}
+
+.active {
+  color: var(--accent-color) !important;
+}
