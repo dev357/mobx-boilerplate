@@ -1,4 +1,5 @@
-import {h, Component} from 'preact';
+// import {h, Component} from 'preact';
+import React, {Component} from 'react';
 import styles from './styles.css';
 import {observable, action} from 'mobx';
 import {observer} from 'mobx-react';

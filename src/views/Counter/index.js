@@ -1,2 +1,3 @@
-export Counter from './Counter';
-export counterState from './CounterState';
+import Counter from './Counter';
+
+export default Counter;

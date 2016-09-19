@@ -1,6 +1,8 @@
 import './main.css';
 
-import {h, render} from 'preact';
+import React from 'react';
+import {render} from 'react-dom';
+// import {h, render} from 'preact';
 import {useStrict} from 'mobx';
 import {Provider} from 'mobx-react';
 import ViewStore from './store/ViewStore';
@@ -14,22 +16,39 @@ startRouter(viewStore, layoutStore);
 
 useStrict(true);
 
-let root;
+const root = document.createElement('div');
+root.id = 'app';
+document.body.appendChild(root);
+
 function renderApp() {
   const App = require('./views/App/App').default;
-  root = render(
+  render(
     <Provider view={viewStore} layout={layoutStore}>
-      <App />
+      <div>
+        <App />
+        <DevTools/>
+      </div>
     </Provider>,
-    document.body,
-    root
+    document.getElementById('app'),
   );
 }
 
+// let root;
+// function renderApp() {
+//   const App = require('./views/App/App').default;
+//   root = render(
+//     <Provider view={viewStore} layout={layoutStore}>
+//       <App />
+//     </Provider>,
+//     document.body,
+//     root
+//   );
+// }
+
 if (module.hot) {
-  const flushLogs = flushHMRLogs();
+  // const flushLogs = flushHMRLogs();
   module.hot.accept('./views/App/App', () => requestAnimationFrame(() => {
-    flushLogs();
+    // flushLogs();
     renderApp();
   }));
 }
@@ -48,5 +67,5 @@ function flushHMRLogs() {
   return () => console.log(`%c🚀 ${logs.splice(0, logs.length).join(' ')}`, 'color:#888;');
 }
 
-render(<DevTools/>, document.body);
+// render(<DevTools/>, document.body);
 renderApp();

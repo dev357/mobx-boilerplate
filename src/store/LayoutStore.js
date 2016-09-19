@@ -1,6 +1,12 @@
 import {observable, computed, action} from 'mobx';
 import {bind} from 'decko';
 
+const bp = {
+  sm: 768,
+  md: 992,
+  lg: 1200
+};
+
 export class LayoutStore {
   @observable sideBarOpen = false;
   @observable screen = null;
@@ -8,12 +14,12 @@ export class LayoutStore {
   @computed get breakpoint() {
     const width = this.screen.width;
     const active = {};
-    if (width < 768) active.xs = true;
-    if (width >= 768) active.su = true;
-    if (width >= 768 && width < 992) active.sm = true;
-    if (width >= 992 && width < 1200) active.md = true;
-    if (width >= 992) active.mu = true;
-    if (width >= 1200) active.lg = true;
+    if (width < bp.sm) active.xs = true;
+    if (width >= bp.sm) active.su = true;
+    if (width >= bp.sm && width < bp.md) active.sm = true;
+    if (width >= bp.md && width < bp.lg) active.md = true;
+    if (width >= bp.md) active.mu = true;
+    if (width >= bp.lg) active.lg = true;
 
     return active;
   }
