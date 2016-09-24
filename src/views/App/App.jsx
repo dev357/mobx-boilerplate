@@ -8,6 +8,7 @@ import AppBar from 'components/AppBar/AppBar';
 import AppFooter from 'components/AppFooter/AppFooter';
 
 import Counter from '../Counter';
+import WhackAMole from '../WhackAMole/WhackAMole';
 
 const App = observer(["view", "layout"], ({view, layout}) => {
   const title = "dev357.io";
@@ -42,13 +43,15 @@ const App = observer(["view", "layout"], ({view, layout}) => {
         return <div>HOME</div>;
       case "counter":
         return <Counter/>;
+      case "whackamole":
+        return <WhackAMole/>;
       case "about":
         return <div>ABOUT</div>;
       case "notfound":
         return <div>NOT FOUND</div>;
 
       default:
-        return <div>unknown view in store.currentView</div>
+        return <div>unknown view: {name}</div>
     }
   }
 });

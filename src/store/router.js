@@ -7,6 +7,7 @@ export function startRouter(view, layout) {
   const router = new Router({
     '/': () => view.showHome(),
     '/counter': () => view.showCounter(),
+    '/whackamole': () => view.showWhackAMole(),
     '/about': () => view.showAbout(),
   });
   router.configure({

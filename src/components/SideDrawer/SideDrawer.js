@@ -16,6 +16,7 @@ function SideDrawer({title, view}) {
           <ExpandableList title="Examples">
             <DrawerLink name="Home" onClick={view.showHome}/>
             <DrawerLink name="Counter" onClick={view.showCounter}/>
+            <DrawerLink name="Whack-A-Mole" onClick={view.showWhackAMole}/>
             <DrawerLink name="About" onClick={view.showAbout}/>
           </ExpandableList>
         </li>
