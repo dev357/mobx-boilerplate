@@ -11,16 +11,17 @@ export default function configureRouter() {
   })
     .usePlugin(loggerPlugin)
     .usePlugin(browserPlugin())
-    .usePlugin(listenersPlugin());
+    .usePlugin(listenersPlugin())
+    .start();
 
-  // autorun(() => {
-  //   // if (!router.getState()) return;
-  //   const path = router.getState().path;
-  //   console.log('path change?', path);
-  //   if (path !== window.location.pathname) {
-  //     window.history.pushState(null, null, path);
-  //   }
-  // });
+  autorun(() => {
+    // if (!router.getState()) return;
+    const path = router.getState().path;
+    console.log('path change?', path);
+    if (path !== window.location.pathname) {
+      window.history.pushState(null, null, path);
+    }
+  });
 
   return router;
 }

@@ -11,7 +11,7 @@ import DevTools from 'mobx-react-devtools';
 import {simpleFetch} from './store/fetch';
 
 import createRouter from './create-router';
-const router = createRouter().start();
+const router = createRouter();
 
 const viewStore = new ViewStore(router);
 

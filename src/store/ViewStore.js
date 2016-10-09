@@ -17,25 +17,21 @@ class ViewStore {
   constructor(router) {
     this.router = router;
     console.log('adding listener');
-    // router.addListener(this.updateRoute);
-
-    autorun(() => {
-      console.log('change!');
-      // if (!router.getState()) return;
-      this.currentPath = this.router.getState().path;
-    });
+    this.updateRoute = this.updateRoute.bind(this);
+    this.updateRoute();
+    router.addListener(this.updateRoute);
   }
 
   @computed get currentRoute() {
-    return router.getState();
+    return this.currentPath;
   }
 
   @computed get isAuthenticated() {
     return this.currentUser !== null
   }
 
-  @action updateRoute = () => {
-    console.log('route change');
+  @action updateRoute() {
+    this.currentPath = this.router.getState().path;
   };
 
 
