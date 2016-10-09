@@ -44,7 +44,6 @@ export class LayoutStore {
 
   @bind @action toggleSideBarOpen() {
     this.sideBarOpen = !this.sideBarOpen;
-
   }
 }
 

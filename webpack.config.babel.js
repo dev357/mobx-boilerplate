@@ -1,28 +1,28 @@
-import webpack from 'webpack';
-import ExtractTextPlugin from 'extract-text-webpack-plugin';
-import HtmlWebpackPlugin from 'html-webpack-plugin';
-import autoprefixer from 'autoprefixer';
-import path from 'path';
+const path = require('path');
+const webpack = require('webpack');
+const autoprefixer = require('autoprefixer');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const ENV = process.env.NODE_ENV || 'development';
-
-const CSS_MAPS = ENV !== 'production';
+const isProd = ENV === 'production';
 
 module.exports = {
-  context: path.resolve(__dirname, "src"),
-  entry: './index.js',
-
+  devtool: isProd ? 'hidden-source-map' : 'cheap-eval-source-map',
+  entry: [
+    'react-hot-loader/patch',
+    'webpack-dev-server/client?http://localhost:3000',
+    'webpack/hot/only-dev-server',
+    './src/index',
+  ],
   output: {
     path: path.resolve(__dirname, "build"),
     publicPath: '/',
     filename: 'bundle.js'
   },
-
   resolve: {
-    extensions: ['', '.jsx', '.js', '.json', '.less'],
-    modulesDirectories: [
-      path.resolve(__dirname, "src/lib"),
-      path.resolve(__dirname, "node_modules"),
+    extensions: ['.jsx', '.js', '.json', '.css'],
+    modules: [
+
       'node_modules'
     ],
     alias: {
@@ -39,85 +39,33 @@ module.exports = {
     loaders: [
       {
         test: /\.jsx?$/,
-        include: /src/,
-        loader: 'babel'
-      },
-      {
-        test: /\.(less|css)$/,
-        include: /src/,
-        loader: ExtractTextPlugin.extract('style?singleton', [
-          `css?sourceMap=${CSS_MAPS}&modules&importLoaders=1&localIdentName=[local]${process.env.CSS_MODULES_IDENT || '_[hash:base64:5]'}`,
-          'postcss',
-          `less?sourceMap=${CSS_MAPS}`
-        ].join('!'))
-      },
-      // {
-      //   test: /\.(less|css)$/,
-      //   exclude: /src\/components\//,
-      //   loader: ExtractTextPlugin.extract('style?singleton', [
-      //     `css?sourceMap=${CSS_MAPS}`,
-      //     `postcss`,
-      //     `less?sourceMap=${CSS_MAPS}`
-      //   ].join('!'))
-      // },
-      {
-        test: /\.json$/,
-        loader: 'json'
-      },
-      {
-        test: /\.(xml|html|txt|md)$/,
-        loader: 'raw'
-      },
-      {
-        test: /\.(svg|woff2?|ttf|eot|jpe?g|png|gif)(\?.*)?$/i,
-        loader: ENV === 'production' ? 'file?name=[path][name]_[hash:base64:5].[ext]' : 'url'
+        include: path.join(__dirname, 'src'),
+        loader: 'babel',
+        query: {
+          presets: ["es2015", "stage-1", "react"],
+          plugins: [
+            "react-hot-loader/babel",
+            "transform-decorators-legacy",
+            // ["transform-react-jsx", { "pragma": "h" }] // for preact
+          ]
+        }
+      }, {
+        test: /\.css$/,
+        include: path.join(__dirname, 'src'),
+        loaders: [
+          'style',
+          'css?modules&importLoaders=1&localIdentName=[name]__[hash:base64:5]',
+        ]
       }
     ]
   },
 
-  postcss: () => [
-    autoprefixer({browsers: 'last 2 versions'})
-  ],
-
-  plugins: ([
-    new webpack.NoErrorsPlugin(),
-    new ExtractTextPlugin('style.css', {
-      allChunks: true,
-      disable: ENV !== 'production'
-    }),
-    new webpack.optimize.DedupePlugin(),
-    new webpack.DefinePlugin({
-      'process.env': JSON.stringify({NODE_ENV: ENV})
-    }),
+  plugins: [
+    new webpack.NamedModulesPlugin(),
+    new webpack.HotModuleReplacementPlugin(),
     new HtmlWebpackPlugin({
-      template: './index.html',
-      minify: {collapseWhitespace: true}
+      hash: false,
+      template: './src/index.html'
     })
-  ]).concat(ENV === 'production' ? [
-    new webpack.optimize.OccurenceOrderPlugin()
-  ] : []),
-
-  stats: {colors: true},
-
-  node: {
-    global: true,
-    process: false,
-    Buffer: false,
-    __filename: false,
-    __dirname: false,
-    setImmediate: false
-  },
-
-  devtool: ENV === 'production' ? 'source-map' : 'eval-source-map',
-
-  devServer: {
-    port: process.env.PORT || 8080,
-    host: '0.0.0.0',
-    colors: true,
-    publicPath: '/',
-    contentBase: './src',
-    historyApiFallback: true,
-    noInfo: false,
-    stats: 'errors-only'
-  }
+  ],
 };

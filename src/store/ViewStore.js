@@ -1,64 +1,44 @@
-import { observable, computed, action } from 'mobx';
-import {bind} from 'decko';
+import { observable, computed, action, autorun } from 'mobx';
+import {createRouter} from 'router5';
 
-import counterStore from './CounterStore';
-import whackAMoleStore from './WhackAMoleStore';
+const routes = [
+  {name: 'home', path: '/'},
+  {name: 'about', path: '/about'},
+  {name: 'counter', path: '/counter'}
+];
+
+const router = createRouter(routes);
 
 class ViewStore {
-  fetch = null;
-
+  @observable currentPath = null;
+  router = null;
   @observable currentUser = null;
-  @observable currentView = null;
 
-  constructor(fetch) {
-    this.fetch = fetch;
+  constructor(router) {
+    this.router = router;
+    console.log('adding listener');
+    // router.addListener(this.updateRoute);
+
+    autorun(() => {
+      console.log('change!');
+      // if (!router.getState()) return;
+      this.currentPath = this.router.getState().path;
+    });
+  }
+
+  @computed get currentRoute() {
+    return router.getState();
   }
 
   @computed get isAuthenticated() {
     return this.currentUser !== null
   }
 
-  @computed get currentPath() {
-    switch(this.currentView.name) {
-      case "home": return "/";
-      case "counter": return "/counter";
-      case "whackamole": return "/whackamole";
-      case "about": return "/about";
-      default: return "/notfound";
-    }
-  }
+  @action updateRoute = () => {
+    console.log('route change');
+  };
 
-  @bind @action showHome() {
-    this.currentView = {
-      name: "home"
-    }
-  }
 
-  @bind @action showCounter() {
-    this.currentView = {
-      name: "counter",
-      store: counterStore
-    }
-  }
-
-  @bind @action showWhackAMole() {
-    this.currentView = {
-      name: "whackamole",
-      store: whackAMoleStore
-    }
-  }
-
-  @bind @action showAbout() {
-    this.currentView = {
-      name: "about"
-    }
-  }
-
-  @bind @action showNotFound() {
-    this.currentView = {
-      name: "notfound"
-    }
-  }
 }
 
 export default ViewStore;

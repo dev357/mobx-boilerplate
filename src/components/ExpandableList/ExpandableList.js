@@ -8,22 +8,20 @@ import {observer} from 'mobx-react';
 export default class ExpandableList extends Component {
   @observable isOpen = false;
 
-  @action toggleOpen = () => {
+  @action toggleOpen() {
     this.isOpen = !this.isOpen;
-  };
+  }
 
   render() {
     const {title, children} = this.props;
     return (
       <div>
-        <strong onClick={this.toggleOpen}>
+        <strong onClick={this.toggleOpen.bind(this)}>
           {title}
         </strong>
         <div>
           {this.isOpen
-            ? <ul className={styles.list}>
-                {children}
-              </ul>
+            ? <ul className={styles.list}>{children}</ul>
             : null }
         </div>
       </div>
