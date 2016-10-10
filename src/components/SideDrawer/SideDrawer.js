@@ -14,9 +14,9 @@ function SideDrawer({title, view}) {
       <ul>
         <li>
           {/*<ExpandableList title="Examples">*/}
-            <Link to="Home">Home</Link>
-            <Link to="About">About</Link>
-            <Link to="Counter">Counter</Link>
+            <Link to="/">Home</Link>
+            <Link to="/about">About</Link>
+            <Link to="/counter">Counter</Link>
           {/*</ExpandableList>*/}
         </li>
       </ul>

@@ -5,7 +5,7 @@ import {observer} from 'mobx-react';
 
 function Link({view, to, children}) {
   return (
-      <a onClick={() => view.router.navigate(to)}>
+      <a onClick={() => view.router.push(to)}>
         {children}
       </a>
   )

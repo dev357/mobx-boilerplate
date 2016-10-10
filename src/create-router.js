@@ -5,7 +5,10 @@ import browserPlugin from 'router5/plugins/browser';
 import routes from './routes';
 import {autorun} from 'mobx';
 
-export default function configureRouter() {
+
+import createHistory from 'history/createBrowserHistory';
+
+export function configureRouter() {
   const router = createRouter(routes, {
     defaultRoute: 'inbox'
   })
@@ -24,4 +27,8 @@ export default function configureRouter() {
   });
 
   return router;
+}
+
+export default function configureRouter() {
+  return createHistory();
 }

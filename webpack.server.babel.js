@@ -16,7 +16,7 @@ compiler.plugin('done', function () {
 
 new WebpackDevServer(compiler, {
   publicPath: config.output.publicPath,
-  hot: true,
+  // hot: true,
   historyApiFallback: true,
   noInfo: true,
   stats: {
