@@ -4,8 +4,6 @@ const autoprefixer = require('autoprefixer');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-const pkg = require('./package.json');
-const deps = pkg.dependencies || {};
 
 const CSSModules = true; // Disable CSSModules here
 
@@ -25,7 +23,7 @@ const getPlugins = () => {
     }),
 
     new webpack.DefinePlugin({
-      'process.env': { NODE_ENV: JSON.stringify(nodeEnv)},
+      'process.env': {NODE_ENV: JSON.stringify(nodeEnv)},
       __DEV__: JSON.stringify(isDev)
     }),
     new HtmlWebpackPlugin({
@@ -44,13 +42,13 @@ const getPlugins = () => {
     plugins.push(
       new CleanWebpackPlugin(['dist', 'build']),
       new webpack.optimize.CommonsChunkPlugin({
-        name: ['main', 'vendor'],
+        names: ['main', 'vendor'],
         filename: '[name].[chunkhash].js',
-        minChunks: Infinity
+        minChunks: module => /node_modules/.test(module.resource)
       }),
       new ExtractTextPlugin({filename: '[name].[chunkhash].css', allChunks: true}),
       new webpack.optimize.UglifyJsPlugin({
-        compress: { screw_ie8: true, warnings: false},
+        compress: {screw_ie8: true, warnings: false},
         output: {comments: false},
         sourceMap: false
       }),
@@ -66,25 +64,21 @@ const getEntry = () => {
   if (isDev) {
     return {
       app: [
-        // 'react-hot-loader/patch',
         'webpack-dev-server/client?http://0.0.0.0:3000',
-        'webpack/hot/only-dev-server',
+        'webpack/hot/dev-server',
         './src/index'
       ]
     };
   } else {
-    let entries = {};
-    entries.app = './src/index';
-    Object.keys(deps).forEach(key => {
-      entries[key] = key;
-    });
-    return entries;
+    return {
+      app: './src/index'
+    }
   }
 };
 
 
-
 module.exports = {
+  stats: {children: false}, // hides the annoying "hidden-modules" spam when building
   cache: isDev,
   devtool: isDev ? 'cheap-module-eval-source-map' : 'hidden-source-map',
   context: path.join(__dirname, '/'),
@@ -110,9 +104,17 @@ module.exports = {
         loader: 'babel',
         query: {
           cacheDirectory: isDev ? 'babel' : null,
-          presets: ["es2015", "stage-0", "react"],
+          presets: [[
+            "latest", {
+              "es2015": {
+                "loose": true,
+                "modules": false
+              }
+            }],
+            "stage-0",
+            "react"
+          ],
           plugins: [
-            // "react-hot-loader/babel",
             "transform-decorators-legacy",
             // ["transform-react-jsx", { "pragma": "h" }] // for preact
           ]
@@ -123,7 +125,8 @@ module.exports = {
         test: /\.css$/,
         loader: isDev
           ? `style!css?localIdentName=[name]__[local].[hash:base64:5]&${CSSModules ? 'modules' : ''}&sourceMap&-minimize&importLoaders=1!postcss`
-          : ExtractTextPlugin.extract({ fallbackLoader: 'style', loader: `css?${CSSModules ? 'modules' : ''}&sourceMap&importLoaders=1!postcss` }),
+          : ExtractTextPlugin.extract({fallbackLoader: 'style', loader: `css?${CSSModules ? 'modules' : ''}&sourceMap&importLoaders=1!postcss`
+        }),
       },
     ]
   },

@@ -1,5 +1,4 @@
-import { observable, computed, action, autorun } from 'mobx';
-import {createRouter} from 'router5';
+import { observable, computed, action } from 'mobx';
 
 import routes from '../routes';
 
@@ -10,12 +9,11 @@ class ViewStore {
 
   constructor(router) {
     this.router = router;
-    console.log('adding listener');
     this.updateRoute();
     router.listen(::this.updateRoute);
   }
 
-  @computed get currentComponent() {
+  @computed get currentRoute() {
     return routes.find(route => route.path === this.currentPath) || routes[0];
   }
 

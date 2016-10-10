@@ -6,7 +6,6 @@ import {useStrict} from 'mobx';
 import {Provider} from 'mobx-react';
 import ViewStore from './store/ViewStore';
 import layoutStore from './store/LayoutStore';
-import DevTools from 'mobx-react-devtools';
 import App from 'views/App/App';
 
 import createHistory from 'history/createBrowserHistory';
@@ -19,6 +18,9 @@ useStrict(true);
 const root = document.createElement('div');
 root.id = 'app';
 document.body.appendChild(root);
+
+let DevTools = () => null;
+if (__DEV__) DevTools = require('mobx-react-devtools').default;
 
 render(
   <Provider view={viewStore} layout={layoutStore}>

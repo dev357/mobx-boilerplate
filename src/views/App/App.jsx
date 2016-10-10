@@ -26,9 +26,8 @@ const App = observer(["view", "layout"], ({view, layout}) => {
             toggleSidebar={layout.toggleSideBarOpen}
           />
           <section>
-            TERE!!!!!!!!!!!!
-            <p>Current route: {view.currentRoute}</p>
-            {view.currentComponent.main()}
+            <p>Current route: {view.currentPath}</p>
+            {view.currentRoute.main()}
           </section>
           <AppFooter />
         </div>
