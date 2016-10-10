@@ -10,7 +10,7 @@ class ViewStore {
   constructor(router) {
     this.router = router;
     this.updateRoute();
-    router.listen(::this.updateRoute);
+    router.listen(this.updateRoute);
   }
 
   @computed get currentRoute() {
@@ -21,7 +21,8 @@ class ViewStore {
     return this.currentUser !== null
   }
 
-  @action updateRoute() {
+  @action updateRoute = () => {
+    console.log('routing');
     this.currentPath = this.router.location.pathname;
   };
 }

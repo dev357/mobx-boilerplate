@@ -1,5 +1,4 @@
 import {observable, computed, action} from 'mobx';
-import {bind} from 'decko';
 
 const bp = {
   sm: 768,
@@ -37,12 +36,12 @@ export class LayoutStore {
     };
   }
 
-  @bind @action handleResize() {
+  @action handleResize = () => {
     this.screen.width = window.innerWidth;
     this.screen.height = window.innerHeight;
   };
 
-  @bind @action toggleSideBarOpen() {
+  @action toggleSideBarOpen = () => {
     this.sideBarOpen = !this.sideBarOpen;
   }
 }

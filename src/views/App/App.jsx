@@ -1,7 +1,6 @@
 import React from 'react';
 import styles from './styles.css';
 import {observer} from 'mobx-react';
-import {Match, Miss} from 'react-router';
 import Sidebar from 'react-sidebar';
 import SideDrawer from 'components/SideDrawer/SideDrawer';
 import AppBar from 'components/AppBar/AppBar';

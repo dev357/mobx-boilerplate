@@ -40,7 +40,7 @@ const getPlugins = () => {
     );
   } else {
     plugins.push(
-      new CleanWebpackPlugin(['dist', 'build']),
+      new CleanWebpackPlugin(['dist', 'build'], {verbose: false}),
       new webpack.optimize.CommonsChunkPlugin({
         names: ['main', 'vendor'],
         filename: '[name].[chunkhash].js',
@@ -80,7 +80,7 @@ const getEntry = () => {
 module.exports = {
   stats: {children: false}, // hides the annoying "hidden-modules" spam when building
   cache: isDev,
-  devtool: isDev ? 'cheap-module-eval-source-map' : 'hidden-source-map',
+  devtool: isDev ? 'eval-source-map' : 'source-map',
   context: path.join(__dirname, '/'),
   entry: getEntry(),
   output: {
@@ -92,7 +92,7 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.jsx', '.json'],
     modules: [
-      'src',
+      'src', // so we can do import 'src/components/Link' instead of '../../../components/Link'
       'node_modules'
     ]
   },
@@ -127,7 +127,16 @@ module.exports = {
           ? `style!css?localIdentName=[name]__[local].[hash:base64:5]&${CSSModules ? 'modules' : ''}&sourceMap&-minimize&importLoaders=1!postcss`
           : ExtractTextPlugin.extract({fallbackLoader: 'style', loader: `css?${CSSModules ? 'modules' : ''}&sourceMap&importLoaders=1!postcss`
         }),
+      }, {
+        test: /\.scss$/,
+        loader: isDev
+          ? `style!css?localIdentName=[name]__[local].[hash:base64:5]&${CSSModules ? 'modules' : ''}&sourceMap&-minimize&importLoaders=2!postcss!sass?outputStyle=expanded&sourceMap`
+          : ExtractTextPlugin.extract({ fallbackLoader: 'style', loader: `css?${CSSModules ? 'modules' : ''}&sourceMap&importLoaders=2!postcss!sass?outputStyle=expanded&sourceMap&sourceMapContents` }),
       },
+      { test: /\.woff(2)?(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=application/font-woff' },
+      { test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=application/octet-stream' },
+      { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: 'file' },
+      { test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=image/svg+xml' },
     ]
   },
   plugins: getPlugins()
