@@ -50,7 +50,7 @@ const getPlugins = () => {
       new webpack.optimize.UglifyJsPlugin({
         compress: {screw_ie8: true, warnings: false},
         output: {comments: false},
-        sourceMap: false
+        sourceMap: true
       }),
       new webpack.optimize.OccurrenceOrderPlugin(true),
       new webpack.optimize.DedupePlugin()
